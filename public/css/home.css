@@ -1,0 +1,29 @@
+.list li {
+    list-style:none;
+}
+
+.article {
+    background: rgba(235, 235, 235, 0.2);
+    border-bottom:1px solid rgb(88, 86, 86);
+    margin-bottom:1rem;
+    display:flex;
+
+}
+
+.article img {
+
+    width:200px;
+    height: 270px;
+    object-fit: cover;
+
+}
+
+.article-info {
+    padding:1rem;
+}
+
+
+
+.list li:first-child {
+    font-weight : bold;
+}

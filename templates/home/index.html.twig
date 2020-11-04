@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Accueil{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    
+    <h1 class="jumbotron text-center">Liste des articles</h1>
+    <div class="list">
+        {% for post in posts %}
+        
+        <div class='article'>
+           <div><img src="{{ post.image }} " alt="image-article"></div>
+           <div class='article-info'> 
+               <ul>
+            <li>{{ post.title | upper }} </li>
+            <li>Extrait: {{ post.content | slice(1, 150) }}... </li>
+            <li>Auteur : {{ post.author }} </li>
+            <li>Date de création : {{ post.createdAt | date("m/d/Y") }} </li>
+            <li><a class="btn btn-primary" href="">Lire la suite</a></li>
+            
+            </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    
+    
+</div>
+{% endblock %}
