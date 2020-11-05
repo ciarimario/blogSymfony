@@ -3,10 +3,11 @@
 namespace App\Factory;
 
 use App\Entity\Post;
-use App\Repository\PostRepository;
-use Zenstruck\Foundry\RepositoryProxy;
-use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use App\Repository\PostRepository;
+use Zenstruck\Foundry\ModelFactory;
+use Zenstruck\Foundry\RepositoryProxy;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @method static Post|Proxy findOrCreate(array $attributes)
@@ -19,31 +20,40 @@ use Zenstruck\Foundry\Proxy;
  */
 final class PostFactory extends ModelFactory
 {
-    public function __construct()
+    /**
+     * @var SluggerInterface
+     */
+    private $slugger;
+
+    public function __construct(SluggerInterface $slugger)
     {
         parent::__construct();
 
-        // TODO inject services if required (https://github.com/zenstruck/foundry#factories-as-services)
+        $this->slugger = $slugger;
     }
 
+    
     protected function getDefaults(): array
-    {
+        {
         return [
-            // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
-            'title' => self::faker()->sentence(),
-            'content' => self::faker()->text(1000),
+                'title' => self::faker()->sentence(),
+            'content' => self::faker()->text(2500),
             'image' => "https://picsum.photos/seed/post-" . rand(0, 500) . "/750/300",
-            'author' => self::faker()->name(),
-            'createdAt' => self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris'),
-        ];
-    }
+                'author' => self::faker()->name(),
+                'createdAt' => self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris'),
+            'category' => CategoryFactory::random()
+            ];
+        }
 
     protected function initialize(): self
     {
-        // see https://github.com/zenstruck/foundry#initialization
+       // see https://github.com/zenstruck/foundry#initialization
         return $this
-            // ->afterInstantiate(function(Post $post) {})
-        ;
+            ->afterInstantiate(function (Post $post) {
+                $slug = $this->slugger->slug($post->getTitle());
+                $post->setSlug($slug);
+            })
+            ;
     }
 
     protected static function getClass(): string

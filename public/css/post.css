@@ -1,0 +1,44 @@
+.article-info li {
+    list-style:none;
+}
+
+.article {
+    background: rgba(235, 235, 235, 0.2);
+    border:1px solid rgb(201, 199, 199);
+    border-radius:5px;
+    margin-bottom:1rem;
+    box-shadow: 10px 10px 15px rgba(cc,cc,cc,0.6);
+    
+
+}
+
+.article img {
+
+    width:100%;
+    height: 350px;
+    object-fit: cover;
+
+}
+
+.article-info {
+    padding:1rem;
+}
+
+
+
+.article-info li:first-child {
+    font-weight : bold;
+}
+
+.article-info-content {
+    padding:1rem 0px;
+}
+
+.article-info-author {
+    padding:1rem 0px;
+}
+
+.article-info-date {
+    margin-bottom:1rem;
+    
+}

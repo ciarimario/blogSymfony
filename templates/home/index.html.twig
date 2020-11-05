@@ -23,10 +23,11 @@
            <div class='article-info'> 
                <ul>
             <li>{{ post.title | upper }} </li>
+            <h6><span class="badge badge-secondary">{{ post.category.name }}</span></h6>
             <li>Extrait: {{ post.content | slice(1, 150) }}... </li>
             <li>Auteur : {{ post.author }} </li>
             <li>Date de création : {{ post.createdAt | date("m/d/Y") }} </li>
-            <li><a class="btn btn-primary" href="">Lire la suite</a></li>
+            <li><a class="btn btn-primary" href="{{ path('post.index', {slug: post.slug})}}">Lire la suite</a></li>
             
             </ul>
             </div>
