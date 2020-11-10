@@ -3,8 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Factory\PostFactory;
-use App\Factory\CategoryFactory;
+use App\Factory\UserFactory;
 use App\Factory\CommentFactory;
+use App\Factory\CategoryFactory;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -21,6 +22,10 @@ class AppFixtures extends Fixture
         // Création de 5 commentaires grâce à la CommentFactory, l'usine à commentaires
         CommentFactory::new()->createMany(5);
         // Enregistrement des objets créés en base de données
+
+        // Création de 5 users
+        UserFactory::new()->createMany(5);
+        
         $manager->flush();
     }
 }

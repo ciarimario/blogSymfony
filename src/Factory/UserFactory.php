@@ -3,10 +3,13 @@
 namespace App\Factory;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-use Zenstruck\Foundry\RepositoryProxy;
-use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use App\Repository\UserRepository;
+use Zenstruck\Foundry\ModelFactory;
+use Zenstruck\Foundry\RepositoryProxy;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @method static User|Proxy findOrCreate(array $attributes)
@@ -19,9 +22,15 @@ use Zenstruck\Foundry\Proxy;
  */
 final class UserFactory extends ModelFactory
 {
-    public function __construct()
+    /**
+     * @var EncoderInterface
+     */
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
     {
         parent::__construct();
+        $this->encoder = $encoder;
 
         // TODO inject services if required (https://github.com/zenstruck/foundry#factories-as-services)
     }
@@ -41,7 +50,12 @@ final class UserFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
+            ->afterInstantiate(function (User $user) {
+                $password = $this->encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($password);
+            })
             // ->afterInstantiate(function(User $user) {})
+
         ;
     }
 
