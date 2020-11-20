@@ -40,6 +40,9 @@ class PostController extends AbstractController
 
             // on donnes à la prorpriété post de comment  l'entité $post
             $comment->setPost($post);
+
+            // on donne l'utilisateur connecté comme utilisateur pour l'auteur du comment
+            $comment->setUser($this->getUser());
             // on fait persisté le $comment
             $manager->persist($comment);
             // on lance toutes les modifications vers la BDD
@@ -71,6 +74,8 @@ class PostController extends AbstractController
 
             $comment = $form->getData();
             $comment->setPost($post);
+            $comment->setUser($this->getUser());
+            $comment->setPublished(0);
 
             $manager->persist($comment);
             $manager->flush();

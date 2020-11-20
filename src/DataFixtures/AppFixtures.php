@@ -12,7 +12,12 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
+
     {
+
+        // Création de 5 users
+        UserFactory::new()->createMany(5);
+
         // Création de 5 catégories grâce à la CategoryFactory, l'usine à fabriquer des catégories
         CategoryFactory::new()->createMany(5);
             
@@ -20,11 +25,15 @@ class AppFixtures extends Fixture
         PostFactory::new()->createMany(10);
 
         // Création de 5 commentaires grâce à la CommentFactory, l'usine à commentaires
-        CommentFactory::new()->createMany(5);
+        CommentFactory::new()->createMany(20);
         // Enregistrement des objets créés en base de données
 
-        // Création de 5 users
-        UserFactory::new()->createMany(5);
+        // on créé un administrateur
+        UserFactory::new()->create([
+            'roles' => ['ROLE_ADMIN'],
+            'password' => 'admin',
+            'email' => 'admin@admin.com'
+        ]);
         
         $manager->flush();
     }

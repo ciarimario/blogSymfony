@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="main-header">
-            <h1>blog symfony</h1>        
+            <h1>Administration blog symfony</h1>        
         </div>
         {# navabar #}
         <div>
@@ -44,9 +44,19 @@
             </div>
             {% endfor %}
         {% endif %}
-        {% block body %}
-        {% endblock %}
+        <main class="container">
+          {% block body %}
+        
+          {% include 'admin/parts/_posts.html.twig' %}
+          {% include 'modals/_confirm.html.twig' with {'message':'Voulez-vous vraiment supprimer cet article', 'id':'remove-post-confirm-modal'} %}
+          {% include 'modals/_success.html.twig' with {'message':'Article supprimé.', 'id':'remove-post-success-modal'} %}
+        
+        
+          {% endblock %}
+        </main>
         {% block javascripts %}
+            <!-- script removePost en Ajax -->
+            <script src="{{ asset('js/admin/admin.js') }}"></script>
             <!-- jQuery -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" 
                     integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" 

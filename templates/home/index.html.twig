@@ -19,13 +19,14 @@
         {% for post in posts %}
         
         <div class='article'>
-           <div><img src="{{ post.image }} " alt="image-article"></div>
+            {# on utilise la variable globale post_image créée dans config/packages/twig.yaml #}
+           <div><img src="{{ asset_post_image(post.image) }}" alt="image-article"></div>
            <div class='article-info'> 
                <ul>
             <li>{{ post.title | upper }} </li>
             <h6><span class="badge badge-secondary">{{ post.category.name }}</span></h6>
             <li>Extrait: {{ post.content | slice(1, 150) }}... </li>
-            <li>Auteur : {{ post.author }} </li>
+            <li>Auteur : {{ post.user.lastname }}&nbsp;{{ post.user.firstname }} </li>
             <li>Date de création : {{ post.createdAt | date("m/d/Y") }} </li>
             <li><a class="btn btn-primary" href="{{ path('post.index', {slug: post.slug})}}">Lire la suite</a></li>
             

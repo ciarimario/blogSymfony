@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Post;
+use App\Factory\UserFactory;
 use Zenstruck\Foundry\Proxy;
 use App\Repository\PostRepository;
 use Zenstruck\Foundry\ModelFactory;
@@ -36,12 +37,14 @@ final class PostFactory extends ModelFactory
     protected function getDefaults(): array
         {
         return [
-                'title' => self::faker()->sentence(),
+            'title' => self::faker()->sentence(),
             'content' => self::faker()->text(2500),
             'image' => "https://picsum.photos/seed/post-" . rand(0, 500) . "/750/300",
-                'author' => self::faker()->name(),
-                'createdAt' => self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris'),
-            'category' => CategoryFactory::random()
+            /* 'author' => self::faker()->name(), */
+            'createdAt' => self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris'),
+            'category' => CategoryFactory::random(),
+            'user' => UserFactory::random()
+            
             ];
         }
 
